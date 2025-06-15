@@ -1,7 +1,7 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr />
 
-<form autocomplete="off" [formGroup]="myForm">
+<form autocomplete="off" [formGroup]="myForm" (ngSubmit)="onSubmit()">
   <!-- Nombre -->
   <div class="mb-3 row">
     <label class="col-sm-3 col-form-label">Nombre</label>
@@ -24,7 +24,12 @@
     <label class="col-sm-3 col-form-label">Agregar</label>
     <div class="col-sm-9">
       <div class="input-group">
-        <input class="form-control" placeholder="Agregar favorito" />
+        <input
+          class="form-control"
+          placeholder="Agregar favorito"
+          [formControl]="newFavGame"
+          (keydown.enter)="onAddToFavorites()"
+        />
 
         <button class="btn btn-outline-primary" type="button">
           Agregar favorito
@@ -42,7 +47,13 @@
         <div class="input-group">
           <input class="form-control" [formControlName]="i" />
 
-          <button class="btn btn-outline-danger" type="button">Eliminar</button>
+          <button
+            class="btn btn-outline-danger"
+            type="button"
+            (click)="onDeleteFavGame(i)"
+          >
+            Eliminar
+          </button>
         </div>
 
         @if (formUtils.isValidFieldInArray(favoriteGames, i)) {
@@ -52,6 +63,11 @@
         </span>
         }
       </div>
+      }
+
+      <!-- error general juegos -->
+      @if (formUtils.isValidField(myForm, 'favoriteGames')) {
+      <span class="form-text text-danger">Debe tener al menos 2 juegos</span>
       }
     </div>
   </div>
@@ -66,14 +82,22 @@
   </div>
 </form>
 
-<span>Valid</span>
+<span>Form Valid</span>
 <pre>{{ myForm.valid | json }}</pre>
 <br />
 
-<span>Value</span>
+<span>Form Value</span>
 <pre>{{ myForm.value | json }}</pre>
 <br />
 
-<span>Agregar Juego</span>
-<!-- <pre>{{ "object" | json }}</pre>
-<pre>{{ "object" | json }}</pre> -->
+<span>Form errors</span>
+<pre>{{ myForm.errors | json }}</pre>
+<br />
+
+<span>Agregar Juego - value</span>
+<pre>{{ favoriteGames.value | json }}</pre>
+<br />
+
+<span>Agregar Juego - errors</span>
+<pre>{{ favoriteGames.errors | json }}</pre>
+<br />
