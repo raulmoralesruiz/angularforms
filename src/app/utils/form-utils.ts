@@ -5,6 +5,14 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 
+const sleep = async () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 2500);
+  });
+};
+
 export class FormUtils {
   // Expresiones regulares
   static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
@@ -27,6 +35,8 @@ export class FormUtils {
             return 'El formato de correo electrónico no es correcto';
           }
           return `Error de patrón con expresión regular`;
+        case 'emailTaken':
+          return `El correo electrónico ya está en uso`;
         default:
           return `Error de validación no controlado ${key}`;
       }
@@ -73,5 +83,21 @@ export class FormUtils {
 
       return pass1Value === pass2Value ? null : { passwordsNotEqual: true };
     };
+  }
+
+  static async checkingServerResponse(
+    control: AbstractControl
+  ): Promise<ValidationErrors | null> {
+    console.log('Validando email en servidor');
+    await sleep(); // esperar 2 seg
+
+    const formValue = control.value;
+    if (formValue === 'hola@mundo.com') {
+      return {
+        emailTaken: true,
+      };
+    }
+
+    return null;
   }
 }
