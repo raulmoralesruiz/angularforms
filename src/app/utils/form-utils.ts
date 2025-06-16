@@ -104,8 +104,6 @@ export class FormUtils {
   }
 
   static notUserRaul(control: AbstractControl): ValidationErrors | null {
-    console.log('Validando notUserRaul');
-
     const formValue = control.value;
     return formValue === 'raul22' ? { notUserRaul: true } : null;
   }
