@@ -37,6 +37,8 @@ export class FormUtils {
           return `Error de patrón con expresión regular`;
         case 'emailTaken':
           return `El correo electrónico ya está en uso`;
+        case 'notUserRaul':
+          return `El usuario está reservado, no se puede usar`;
         default:
           return `Error de validación no controlado ${key}`;
       }
@@ -99,5 +101,12 @@ export class FormUtils {
     }
 
     return null;
+  }
+
+  static notUserRaul(control: AbstractControl): ValidationErrors | null {
+    console.log('Validando notUserRaul');
+
+    const formValue = control.value;
+    return formValue === 'raul22' ? { notUserRaul: true } : null;
   }
 }
