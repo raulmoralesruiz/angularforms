@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Country } from '../interfaces/country.interface';
 
 @Injectable({ providedIn: 'root' })
-export class CountryServiceService {
+export class CountryService {
   http = inject(HttpClient);
   private baseUrl = 'https://restcountries.com/v3.1';
 
